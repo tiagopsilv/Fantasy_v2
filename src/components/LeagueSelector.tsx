@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Users, Trophy, Calendar, ChevronRight, Star, Crown } from "lucide-react";
+import { Search, Users, Trophy, ChevronRight, Star, Crown } from "lucide-react";
 import { Input } from "./ui/input";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -8,20 +8,11 @@ import { Card, CardContent } from "./ui/card";
 export interface League {
   id: string;
   name: string;
-  type: "public" | "private" | "premium";
   teams: number;
   maxTeams: number;
-  startDate: string;
-  status: "draft" | "active" | "finished";
-  buyIn: number;
-  prizePool: number;
   owner: string;
-  description: string;
-  difficulty: "beginner" | "intermediate" | "expert";
-  format: "PPR" | "Standard" | "Half-PPR";
   isOwner?: boolean;
   isJoined?: boolean;
-  avatar?: string;
 }
 
 interface LeagueSelectorProps {
@@ -45,40 +36,6 @@ export function LeagueSelector({ leagues, selectedLeague, onLeagueSelect, userNa
     
     return matchesSearch && matchesFilter;
   });
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case "premium": return <Crown className="w-4 h-4 text-[#FFD700]" />;
-      case "private": return <Users className="w-4 h-4 text-[#00E6B3]" />;
-      default: return <Users className="w-4 h-4 text-[#B8BAC1]" />;
-    }
-  };
-
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case "premium": return "bg-[#FFD700] text-[#1A2238]";
-      case "private": return "bg-[#00E6B3] text-[#1A2238]";
-      default: return "bg-[#4A4E56] text-white";
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "draft": return "bg-[#FFD700] text-[#1A2238]";
-      case "active": return "bg-[#0B6623] text-white";
-      case "finished": return "bg-[#4A4E56] text-white";
-      default: return "bg-[#4A4E56] text-white";
-    }
-  };
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "beginner": return "text-[#0B6623]";
-      case "intermediate": return "text-[#FFD700]";
-      case "expert": return "text-[#B22222]";
-      default: return "text-[#B8BAC1]";
-    }
-  };
 
   const selectedLeagueData = leagues.find(l => l.id === selectedLeague);
 
@@ -157,20 +114,17 @@ export function LeagueSelector({ leagues, selectedLeague, onLeagueSelect, userNa
                   <Crown className="w-4 h-4 text-[#FFD700]" />
                 )}
               </div>
-              <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm">
+              <div className="space-y-1 text-xs sm:text-sm">
                 <div className="text-[#B8BAC1]">
-                  <span className="text-[#00E6B3]">{selectedLeagueData.teams}</span>/{selectedLeagueData.maxTeams} times
+                  <span className="text-[#00E6B3]">{selectedLeagueData.teams}</span>/{selectedLeagueData.maxTeams} participantes
                 </div>
                 <div className="text-[#B8BAC1]">
-                  {selectedLeagueData.format} • <span className={getDifficultyColor(selectedLeagueData.difficulty)}>
-                    {selectedLeagueData.difficulty}
-                  </span>
+                  Organizador: <span className="text-white">{selectedLeagueData.owner}</span>
                 </div>
               </div>
             </div>
-            <Badge className={getStatusColor(selectedLeagueData.status)}>
-              {selectedLeagueData.status === "draft" ? "Draft" : 
-               selectedLeagueData.status === "active" ? "Ativa" : "Finalizada"}
+            <Badge className="bg-[#0B6623] text-white">
+              Ativa
             </Badge>
           </div>
         </div>
@@ -194,70 +148,32 @@ export function LeagueSelector({ leagues, selectedLeague, onLeagueSelect, userNa
               onClick={() => onLeagueSelect(league.id)}
             >
               <CardContent className="p-3 sm:p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    {/* Header Row */}
-                    <div className="flex items-center gap-2 mb-2">
-                      {getTypeIcon(league.type)}
-                      <h4 className="text-white font-medium text-sm sm:text-base truncate">
-                        {league.name}
-                      </h4>
-                      {league.isOwner && (
-                        <Crown className="w-4 h-4 text-[#FFD700]" />
-                      )}
-                      {league.isJoined && (
-                        <Star className="w-4 h-4 text-[#00E6B3] fill-current" />
-                      )}
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-[#B8BAC1] text-xs sm:text-sm mb-3 line-clamp-2">
-                      {league.description}
-                    </p>
-
-                    {/* Stats Row */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3 text-xs">
-                      <div className="flex items-center gap-1">
-                        <Users className="w-3 h-3 text-[#B8BAC1]" />
-                        <span className="text-[#B8BAC1]">
-                          <span className="text-white">{league.teams}</span>/{league.maxTeams}
-                        </span>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <Users className="w-5 h-5 text-[#00E6B3] flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="text-white font-medium text-sm sm:text-base truncate">
+                          {league.name}
+                        </h4>
+                        {league.isOwner && (
+                          <Crown className="w-4 h-4 text-[#FFD700] flex-shrink-0" />
+                        )}
+                        {league.isJoined && (
+                          <Star className="w-4 h-4 text-[#00E6B3] fill-current flex-shrink-0" />
+                        )}
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3 text-[#B8BAC1]" />
-                        <span className="text-[#B8BAC1]">{league.startDate}</span>
-                      </div>
-                      <div className="text-[#B8BAC1]">
-                        Prize: <span className="text-[#FFD700]">R$ {league.prizePool.toLocaleString()}</span>
-                      </div>
-                      <div className="text-[#B8BAC1]">
-                        <span className={getDifficultyColor(league.difficulty)}>
-                          {league.difficulty}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Owner */}
-                    <div className="flex items-center justify-between">
-                      <div className="text-xs text-[#B8BAC1]">
-                        Organizador: <span className="text-white">{league.owner}</span>
-                      </div>
-                      <div className="flex gap-1">
-                        <Badge className={getTypeColor(league.type)} variant="secondary">
-                          {league.type === "premium" ? "Premium" : 
-                           league.type === "private" ? "Privada" : "Pública"}
-                        </Badge>
+                      <div className="space-y-1 text-xs sm:text-sm">
+                        <div className="text-[#B8BAC1]">
+                          <span className="text-[#00E6B3]">{league.teams}</span>/{league.maxTeams} participantes
+                        </div>
+                        <div className="text-[#B8BAC1]">
+                          Organizador: <span className="text-white">{league.owner}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-
-                  <div className="flex flex-col items-center gap-2">
-                    <Badge className={getStatusColor(league.status)} variant="secondary">
-                      {league.status === "draft" ? "Draft" : 
-                       league.status === "active" ? "Ativa" : "Finalizada"}
-                    </Badge>
-                    <ChevronRight className="w-4 h-4 text-[#B8BAC1]" />
-                  </div>
+                  <ChevronRight className="w-4 h-4 text-[#B8BAC1] flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>

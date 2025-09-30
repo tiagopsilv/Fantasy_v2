@@ -237,4 +237,13 @@ html {
   * {
     -webkit-tap-highlight-color: transparent;
   }
+  
+  /* Toast adjustments for mobile */
+  [data-sonner-toaster] {
+    bottom: 80px !important;
+  }
+  
+  [data-sonner-toast] {
+    margin-bottom: 0 !important;
+  }
 }

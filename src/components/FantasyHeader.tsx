@@ -19,7 +19,12 @@ export function FantasyHeader({ leagueName, userName, isAdmin = false }: Fantasy
               <span className="text-white font-bold text-sm sm:text-lg">🏈</span>
             </div>
             <div className="min-w-0">
-              <h1 className="text-white font-bold text-sm sm:text-base truncate">Fantasy Football</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-white font-bold text-sm sm:text-base truncate">Fantasy Football</h1>
+                <Badge className="bg-[#00E6B3] text-[#1A2238] text-xs">
+                  PROTÓTIPO
+                </Badge>
+              </div>
               <p className="text-[#B8BAC1] text-xs sm:text-sm truncate">{leagueName}</p>
             </div>
           </div>
