@@ -16,68 +16,45 @@ const mockLeagues: League[] = [
   {
     id: "1",
     name: "Liga dos Campeões 2024",
-    type: "premium",
     teams: 10,
     maxTeams: 12,
-    startDate: "15/09/2024",
-    status: "active",
-    buyIn: 100,
-    prizePool: 1200,
     owner: "Admin Fantasy",
-    description: "Liga premium com grandes prêmios e competição de alto nível",
-    difficulty: "expert",
-    format: "PPR",
     isOwner: false,
     isJoined: true
   },
   {
     id: "2", 
     name: "Liga dos Amigos",
-    type: "private",
     teams: 8,
     maxTeams: 10,
-    startDate: "01/09/2024",
-    status: "active", 
-    buyIn: 50,
-    prizePool: 500,
     owner: "João Silva",
-    description: "Liga privada entre amigos para diversão e competição",
-    difficulty: "intermediate",
-    format: "Standard",
     isOwner: true,
     isJoined: true
   },
   {
     id: "3",
     name: "Liga Iniciantes 2024",
-    type: "public",
     teams: 6,
     maxTeams: 12,
-    startDate: "20/09/2024",
-    status: "draft",
-    buyIn: 0,
-    prizePool: 0,
     owner: "Fantasy Central",
-    description: "Liga gratuita para iniciantes aprenderem fantasy football",
-    difficulty: "beginner",
-    format: "Half-PPR",
     isOwner: false,
     isJoined: false
   },
   {
     id: "4",
     name: "Liga Corporativa TechCorp",
-    type: "private",
     teams: 12,
     maxTeams: 12,
-    startDate: "10/09/2024",
-    status: "active",
-    buyIn: 75,
-    prizePool: 900,
     owner: "HR TechCorp",
-    description: "Liga oficial da empresa TechCorp para colaboradores",
-    difficulty: "intermediate",
-    format: "PPR",
+    isOwner: false,
+    isJoined: false
+  },
+  {
+    id: "5",
+    name: "Liga Elite Brasil",
+    teams: 4,
+    maxTeams: 8,
+    owner: "Admin Elite",
     isOwner: false,
     isJoined: false
   }
@@ -517,7 +494,7 @@ export default function App() {
         isAdmin={isAdmin}
       />
       
-      <main className="flex-1 pt-16 sm:pt-20 px-4 sm:px-6 pb-20 sm:pb-8">
+      <main className="flex-1 pt-16 sm:pt-20 px-4 sm:px-6 pb-28 sm:pb-8">
         <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 h-full flex flex-col">
           {/* Breadcrumb Navigation */}
           {selectedLeagueData && (
@@ -609,8 +586,10 @@ export default function App() {
               </div>
 
               {/* Layout Mobile */}
-              <div className="sm:hidden flex-1 flex flex-col min-h-0">
-                {renderMobileContent()}
+              <div className="sm:hidden flex-1 flex flex-col min-h-0 pb-2">
+                <div className="flex-1 overflow-auto mobile-scroll">
+                  {renderMobileContent()}
+                </div>
               </div>
             </>
           )}
@@ -636,7 +615,17 @@ export default function App() {
         />
       )}
       
-      <Toaster />
+      <Toaster 
+        position="bottom-center"
+        toastOptions={{
+          style: {
+            marginBottom: '100px', // Maior espaço para o novo menu
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+          },
+          className: 'mobile-backdrop',
+        }}
+      />
     </div>
   );
 }
