@@ -1,7 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @custom-variant dark (&:is(.dark *));
 
+/* ===========================
+   🎨 Base Theme Variables
+   =========================== */
 :root {
   --font-size: 16px;
+
+  /* Core colors */
   --background: #1A2238;
   --foreground: #ffffff;
   --card: #2C2F33;
@@ -18,19 +26,29 @@
   --accent-foreground: #1A2238;
   --destructive: #B22222;
   --destructive-foreground: #ffffff;
+
+  /* Borders / Inputs / Rings */
   --border: #4A4E56;
   --input: #2C2F33;
   --input-background: #2C2F33;
   --switch-background: #4A4E56;
+  --ring: #00E6B3;
+
+  /* Typography weights */
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #00E6B3;
+
+  /* Charts */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
+
+  /* Layout */
   --radius: 0.625rem;
+
+  /* Sidebar */
   --sidebar: #2C2F33;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: #0B6623;
@@ -39,8 +57,8 @@
   --sidebar-accent-foreground: #1A2238;
   --sidebar-border: #4A4E56;
   --sidebar-ring: #00E6B3;
-  
-  /* Fantasy Football specific colors */
+
+  /* Fantasy-specific */
   --ff-background: #1A2238;
   --ff-card: #2C2F33;
   --ff-primary: #0B6623;
@@ -51,6 +69,9 @@
   --ff-text-muted: #B8BAC1;
 }
 
+/* ===========================
+   🌙 Dark Mode
+   =========================== */
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -73,11 +94,15 @@
   --ring: oklch(0.439 0 0);
   --font-weight-medium: 500;
   --font-weight-normal: 400;
+
+  /* Charts */
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
+
+  /* Sidebar */
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -88,6 +113,9 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+/* ===========================
+   🧱 Theme Mapping
+   =========================== */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -110,15 +138,18 @@
   --color-input-background: var(--input-background);
   --color-switch-background: var(--switch-background);
   --color-ring: var(--ring);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -129,6 +160,9 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ===========================
+   🧍 Base Styles
+   =========================== */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -139,111 +173,81 @@
   }
 }
 
-/**
- * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
- */
 @layer base {
   :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
-    h1 {
-      font-size: var(--text-2xl);
-      font-weight: var(--font-weight-medium);
+    h1, h2, h3, h4, p, label, button, input {
       line-height: 1.5;
     }
-
-    h2 {
-      font-size: var(--text-xl);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    h3 {
-      font-size: var(--text-lg);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    h4 {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    p {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-normal);
-      line-height: 1.5;
-    }
-
-    label {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    button {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    input {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-normal);
-      line-height: 1.5;
-    }
+    h1 { font-size: var(--text-2xl); font-weight: var(--font-weight-medium); }
+    h2 { font-size: var(--text-xl); font-weight: var(--font-weight-medium); }
+    h3 { font-size: var(--text-lg); font-weight: var(--font-weight-medium); }
+    h4 { font-size: var(--text-base); font-weight: var(--font-weight-medium); }
+    p, input { font-size: var(--text-base); font-weight: var(--font-weight-normal); }
+    label, button { font-size: var(--text-base); font-weight: var(--font-weight-medium); }
   }
 }
 
-html {
-  font-size: var(--font-size);
-}
+html { font-size: var(--font-size); }
 
-/* Mobile optimizations */
+/* ===========================
+   📱 Mobile Optimizations
+   =========================== */
 @media (max-width: 767px) {
-  html {
-    font-size: 14px;
-  }
-  
-  .mobile-scroll {
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  /* Touch targets */
-  button, 
-  [role="button"],
-  input,
-  select,
-  textarea {
-    min-height: 44px;
-  }
-  
-  /* Prevent horizontal scroll */
-  body {
-    overflow-x: hidden;
-  }
-  
-  /* Safe area for mobile devices */
-  .safe-area-padding {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  
-  /* Better scrolling for mobile */
+  html { font-size: 14px; }
+
+  button, [role="button"], input, select, textarea { min-height: 44px; }
+
+  body { overflow-x: hidden; }
+
+  .safe-area-padding { padding-bottom: env(safe-area-inset-bottom); }
+
   .mobile-scroll {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
-  
-  /* Improve touch scrolling performance */
-  * {
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  /* Toast adjustments for mobile */
+
+  * { -webkit-tap-highlight-color: transparent; }
+
   [data-sonner-toaster] {
-    bottom: 80px !important;
+    bottom: 92px !important;
   }
-  
+
   [data-sonner-toast] {
     margin-bottom: 0 !important;
+    backdrop-filter: blur(12px);
   }
+
+  nav button {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    * {
+      transition-duration: 0.2s;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  @supports (backdrop-filter: blur(10px)) {
+    .mobile-backdrop {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  }
+
+  button:active {
+    transform: scale(0.96);
+    transition-duration: 0.1s;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
 }
